@@ -5,13 +5,13 @@ Example
   
     import React, { Component } from "react";
     ...
-    
     import { Header, ScrollableComponent } from "react-native-parallax-header";
+    
+    
     export default class Profile extends Component {
-    ...
-    ...
-  
-      renderHeader = (animation, canJumpToTab) => props => (
+      ...
+      ...
+     renderHeader = (animation, canJumpToTab) => props => (
       <Header
         animation={animation}
         childTop={<View style={{ backgroundColor: "red", height: 140 }} />}
@@ -34,7 +34,7 @@ Example
     );
   
     render() {
-    return (
+      return (
         <ScrollableComponent currentTab={this.state.currentTab}>
           {(animation, { canJumpToTab }) => (
             <View style={initialLayout}>
