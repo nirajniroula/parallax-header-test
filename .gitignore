@@ -1,0 +1,13 @@
+ any issues when publishing to NPM.
+
+# Logs
+*.log
+npm-debug.log
+
+# Runtime data
+tmp
+build
+dist
+
+# Dependency directory
+node_modules
