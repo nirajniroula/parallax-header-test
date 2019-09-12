@@ -1,8 +1,8 @@
-import React from "react";
-import { FlatList, Animated } from "react-native";
-import PropTypes from "prop-types";
-import { ifIphoneX, isAndroid } from "../../utils/DeviceUtils";
-import HeaderContext from "../HeaderContext";
+import React from 'react';
+import { FlatList, Animated } from 'react-native';
+import PropTypes from 'prop-types';
+import { ifIphoneX, isAndroid } from '../../utils/DeviceUtils';
+import HeaderContext from '../HeaderContext';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -37,7 +37,7 @@ class FlatListHelper extends React.PureComponent {
 
   render() {
     const { scrollY, fullHeight } = this.props.animation;
-    const { contentContainerStyle } = this.props;
+    const { contentContainerStyle, headerHeight } = this.props;
 
     return (
       <AnimatedFlatList
@@ -47,7 +47,7 @@ class FlatListHelper extends React.PureComponent {
         onMomentumScrollBegin={this._onMomentumScrollBegin}
         onMomentumScrollEnd={this._onMomentumScrollEnd}
         contentContainerStyle={[
-          { paddingTop: fullHeight + ifIphoneX(15, 0) },
+          { paddingTop: headerHeight + ifIphoneX(15, 0) },
           contentContainerStyle
         ]}
         ref={component => {
@@ -66,8 +66,7 @@ FlatListHelper.propTypes = {
   tabRoute: PropTypes.string.isRequired,
   animation: PropTypes.object.isRequired,
   addHandlerScroll: PropTypes.func.isRequired,
-  _canJumpToTab: PropTypes.func.isRequired,
-  contentContainerStyle: PropTypes.object.isRequired
+  _canJumpToTab: PropTypes.func.isRequired
 };
 
 // HOC
