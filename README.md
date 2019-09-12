@@ -1,6 +1,7 @@
 # parallax-header-test
 Example
 
+import React, { Component } from "react";
 ...
 import { Header, ScrollableComponent } from "react-native-parallax-header";
 export default class Profile extends Component {
