@@ -1,7 +1,7 @@
 {
   "name": "react-native-parallax-header",
   "version": "1.0.0",
-  "description": "A simple react native package to achieve parallax effect on scrolling components.",
+  "description": "A simple react native package to achieve parallax effect on scrolling components(along with an animated flat list).",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
