@@ -1,31 +1,13 @@
-import { Animated } from "react-native";
+import { Animated } from 'react-native';
 
 export default class HeaderAnimation {
-  /**
-   *  Header Size
-   *
-   * Header height consists of nested components
-   * See /components/Header.js
-   *
-   * coverImageHeight = 140 (TopPartHeight)
-   * headerBottomHeight = 120 (approx.)
-   *
-   * Calculate
-   *
-   * coverImageHeight + headerBottomHeight = 260 (Wrapper Height)
-   *
-   * 140 + headerBottomHeight = 260 (Full height)
-   *
-   * TODO: Add/Remove Settings Button's height(from headerBottomHeight) according to user's role.
-   *
-   */
   statusBarHeight = 21;
 
   wrapperHeight = 280;
 
-  topPartHeight = 140;
+  topPartHeight = 0;
 
-  fullHeight = this.topPartHeight + 140;
+  fullHeight = 120;
 
   distanceRange = this.fullHeight - this.topPartHeight;
 
@@ -58,6 +40,9 @@ export default class HeaderAnimation {
   constructor(initialState) {
     this.initialState = initialState;
 
+    if (initialState.headerHeight) {
+      this._updateFullHeight(initialState.headerHeight);
+    }
     this._createClampedScroll();
     this.scrollY.addListener(this._updateScroll);
   }
@@ -65,6 +50,13 @@ export default class HeaderAnimation {
   destroy() {
     this.scrollY.removeAllListeners();
   }
+
+  _updateFullHeight = headerHeight => {
+    this.fullHeight = headerHeight;
+    this.distanceRange = this.fullHeight - this.topPartHeight;
+    this.maxClamp = this.fullHeight + this.statusBarHeight;
+    this.diffClamp = this.maxClamp - this.minClamp;
+  };
 
   _updateScroll = ({ value, manually }) => {
     if (value && manually) {
@@ -85,12 +77,12 @@ export default class HeaderAnimation {
         .interpolate({
           inputRange: [0, 1],
           outputRange: [0, 1],
-          extrapolateLeft: "clamp"
+          extrapolateLeft: 'clamp'
         })
         .interpolate({
           inputRange: [0, this.topPartHeight],
           outputRange: [this.topPartHeight, this.topPartHeight],
-          extrapolate: "identity"
+          extrapolate: 'identity'
         }),
       this.minClamp,
       this.maxClamp
@@ -182,7 +174,7 @@ export default class HeaderAnimation {
           // Add bottom height part
           inputRange: [-this.topPartHeight, 0],
           outputRange: [0, this.minClamp],
-          extrapolate: "clamp"
+          extrapolate: 'clamp'
         })
     );
 
@@ -203,12 +195,12 @@ export default class HeaderAnimation {
             this.actionAnimated.interpolate({
               inputRange: [0, this.maxActionAnimated],
               outputRange: [0, -this.topPartHeight],
-              extrapolate: "clamp"
+              extrapolate: 'clamp'
             }),
             this.scrollY.interpolate({
               inputRange: [0, this.topPartHeight],
               outputRange: [0, this.topPartHeight],
-              extrapolate: "clamp"
+              extrapolate: 'clamp'
             })
           )
         }
@@ -221,25 +213,8 @@ export default class HeaderAnimation {
       opacity: this.clampedScroll.interpolate({
         inputRange: [this.topPartHeight, this.maxClamp],
         outputRange: [1, 0],
-        extrapolate: "clamp"
+        extrapolate: 'clamp'
       })
-    };
-  }
-
-  getOpacityHeaderBottom() {
-    return {
-      opacity: Animated.add(
-        this.actionAnimated.interpolate({
-          inputRange: [0, this.maxActionAnimated],
-          outputRange: [0, 1],
-          extrapolate: "clamp"
-        }),
-        this.scrollY.interpolate({
-          inputRange: [0, this.topPartHeight],
-          outputRange: [1, 0],
-          extrapolate: "clamp"
-        })
-      )
     };
   }
 }
