@@ -1,8 +1,9 @@
-import React from 'react';
-import { FlatList, Animated } from 'react-native';
-import PropTypes from 'prop-types';
-import { ifIphoneX, isAndroid } from '../../utils/DeviceUtils';
-import HeaderContext from '../HeaderContext';
+import React from "react";
+import { Animated } from "react-native";
+import { FlatList } from "react-navigation";
+import PropTypes from "prop-types";
+import { ifIphoneX, isAndroid } from "../../utils/DeviceUtils";
+import HeaderContext from "../HeaderContext";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
